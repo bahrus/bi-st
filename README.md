@@ -11,7 +11,7 @@ Syntax:
 ({
     '[data-st]':{
         onPopState: ({bist, el}) =>{
-            el.value = bist.pullFromPath(el.dataset.st);
+            el.value = bist.pullFromPath(el.dataset.st, 'Volt ikh mit dir gefloygn vu du vilst');
         },
         on:{
             input: ({event, bist}) =>{
@@ -21,6 +21,6 @@ Syntax:
     }
 })
 </script></bi-st>
-<p-d on="history-changed" to="{histEvent: tbd}"></p-d>
-<purr-sist write>
+<p-d on="history-changed" to="{histEvent:detail.value}"></p-d>
+<purr-sist write></purr-sist>
 ```

@@ -72,17 +72,28 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         }
         
     }
-
     merge(path: string, val: any, cmd:string){
         const h = this._window.history;
         const state = h.state;
         const hist = Object.assign({}, state);
         const mergeO = createNestedProp({}, path.split('.'), val, false);
         mergeDeep(state, mergeO);
+        
         this.de('history',{
             value: hist
         });
         (<any>h)[cmd + 'State'](hist, '', this._url);
+    }
+
+    pullFromPath(path: string, def: string){
+        let context = this._window.history.state;
+        if(context === null) return def;
+        const pathTokens = path.split('.');
+        pathTokens.forEach(token => {
+            context = context[token];
+            if(context === null || context === undefined) return def;
+        });
+        return context;        
     }
 
     //TODO share with new mixin from xtal-state-commit
