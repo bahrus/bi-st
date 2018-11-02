@@ -1,4 +1,5 @@
 import {XtallatX} from 'xtal-latx/xtal-latx.js';
+import {mergeDeep} from 'xtal-latx/mergeDeep.js'
 import {XtalStateWatch} from 'xtal-state/xtal-state-watch.js';
 import {define} from 'xtal-latx/define.js';
 import {observeCssSelector} from 'xtal-latx/observeCssSelector.js';
@@ -70,6 +71,27 @@ export class Bist extends observeCssSelector(XtalStateWatch){
             }
         }
         
+    }
+
+    merge(path: string, val: any, cmd:string){
+        const h = this._window.history;
+        const state = h.state;
+        const hist = Object.assign({}, state);
+        const mergeO = createNestedProp({}, path.split('.'), val, false);
+        mergeDeep(state, mergeO);
+        this.de('history',{
+            value: hist
+        });
+        (<any>h)[cmd + 'State'](hist, '', this._url);
+    }
+
+    //TODO share with new mixin from xtal-state-commit
+    _url!: string;
+    get url(){
+        return this._url;
+    }
+    set url(v){
+        this._url = v;
     }
 }
 define(Bist);

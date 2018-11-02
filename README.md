@@ -15,7 +15,7 @@ Syntax:
         },
         on:{
             input: ({event, bist}) =>{
-                bist.mergePush(event.target.dataset.st, event.target.value);
+                bist.merge(event.target.dataset.st, event.target.value, 'push');
             }
         }
     }
