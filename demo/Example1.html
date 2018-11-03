@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Example 3</title>
+    <title>Example 1</title>
 </head>
 
 <body>
@@ -60,15 +60,14 @@
         <!-- Pass Aggregated Object to button's "obj" property -->
         <p-d on="value-changed" to="button{obj:target.value}" m="1"></p-d>
 
-        <button>Insert Key/Value pair</button>
-        <!-- Pass button's "obj" property to history via history-state-update-->
-        <p-d-x on="click" to="xtal-state-update{history.submitted:target.obj}" skip-init m="1"></p-d-x>
+        <button insert>Insert Key/Value pair</button>
+        
 
-        <!-- Update (merge) into global history.state object the new submitted object -->
+        
         <xtal-state-update make level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"></xtal-state-update>
 
-
-        <bi-st level="global"><script nomodule>({
+        <!-- Manage binding between global history.state and UI elements -->
+        <bi-st level="global"><script nomodule url-search="(?<store>(.*?))" replace-url-value="?id=$<store>">({
             '[data-st]': {
                 onPopState: (bist, el) => {
                     el.value = bist.pullFromPath(el.dataset.st, el.value);
@@ -76,6 +75,13 @@
                 on: {
                     input: (event, bist ) => {
                         bist.merge(event.target.dataset.st, event.target.value, 'push');
+                    }
+                }
+            },
+            '[insert]':{
+                on:{
+                    click: (event, bist) =>{
+                        bist.merge('submitted', event.target.obj, 'push');
                     }
                 }
             }
