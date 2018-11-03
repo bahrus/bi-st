@@ -1,4 +1,3 @@
-import {XtallatX} from 'xtal-latx/xtal-latx.js';
 import {mergeDeep} from 'xtal-latx/mergeDeep.js'
 import {XtalStateWatch} from 'xtal-state/xtal-state-watch.js';
 import {define} from 'xtal-latx/define.js';

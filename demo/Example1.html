@@ -68,23 +68,21 @@
         <xtal-state-update make level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"></xtal-state-update>
 
 
-        <bi-st level="global"><script nomodule>
-            ({
-                '[data-st]': {
-                    onPopState: (bist, el) => {
-                        el.value = bist.pullFromPath(el.dataset.st, el.value);
-                    },
-                    on: {
-                        input: (event, bist ) => {
-                            bist.merge(event.target.dataset.st, event.target.value, 'push');
-                        }
+        <bi-st level="global"><script nomodule>({
+            '[data-st]': {
+                onPopState: (bist, el) => {
+                    el.value = bist.pullFromPath(el.dataset.st, el.value);
+                },
+                on: {
+                    input: (event, bist ) => {
+                        bist.merge(event.target.dataset.st, event.target.value, 'push');
                     }
                 }
-            })
-        </script></bi-st>
+            }
+        })</script></bi-st>
         <!-- Send new history.state object to object persister -->
         <p-d on="history-changed" to="{historyEvent:target}" skip-init></p-d>
-        
+
         <!-- Persist history.state to remote store-->
         <purr-sist write></purr-sist>
 
