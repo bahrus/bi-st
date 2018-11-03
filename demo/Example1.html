@@ -12,7 +12,8 @@
     <div style="display:flex;flex-direction: column">
 
         <!-- Parse the address bar -->
-        <xtal-state-parse disabled="2" parse="location.href" level="global" with-url-pattern="id=(?<storeId>[a-z0-9-]*)">
+        <xtal-state-parse disabled="2" parse="location.href" level="global" 
+            with-url-pattern="id=(?<storeId>[a-z0-9-]*)">
         </xtal-state-parse>
 
         <!-- If no id found in address bar, "pass-down (p-d)" message to purr-sist writer 
@@ -42,8 +43,6 @@
         <p-d on="input" to="{val:target.value}"></p-d>
         <!-- ============================  End UI Input fields =============================== -->
 
-
-
         <!-- Combine key / value fields into one object -->
         <aggregator-fn>
             <script nomodule>
@@ -61,10 +60,6 @@
         <p-d on="value-changed" to="button{obj:target.value}" m="1"></p-d>
 
         <button insert>Insert Key/Value pair</button>
-        
-
-        
-        <xtal-state-update make level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"></xtal-state-update>
 
         <!-- Manage binding between global history.state and UI elements -->
         <bi-st level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
@@ -73,16 +68,12 @@
                     el.value = bist.pullFromPath(el.dataset.st, el.value);
                 },
                 on: {
-                    input: (event, bist ) => {
-                        bist.merge(event.target.dataset.st, event.target.value, 'push');
-                    }
+                    input: (event, bist ) => bist.merge(event.target.dataset.st, event.target.value, 'push'),
                 }
             },
             '[insert]':{
                 on:{
-                    click: (event, bist) =>{
-                        bist.merge('submitted', event.target.obj, 'push');
-                    }
+                    click: (event, bist) => bist.merge('submitted', event.target.obj, 'push'),
                 }
             }
         })</script></bi-st>
@@ -108,5 +99,4 @@
         <script type="module" src="../bi-st.js"></script>
     </div>
 </body>
-
 </html>
