@@ -7,7 +7,7 @@ import {createNestedProp} from 'xtal-latx/createNestedProp.js';
 
 interface IRule{
     onPopState: (bist: Bist, el: HTMLElement) => void;
-    on: {[key: string]: (e: Event, bist: Bist)};
+    on: {[key: string]: (e: Event, bist: Bist) => void};
 }
 
 export class Bist extends observeCssSelector(XtalStateWatch){
@@ -58,7 +58,10 @@ export class Bist extends observeCssSelector(XtalStateWatch){
                 if(rule.onPopState){
                     this.addEventListener('history-changed', e =>{
                         rule.onPopState(this, target);
-                    })
+                    });
+                    if(this._window.history.state !== null){
+                        rule.onPopState(this, target);
+                    }
                 }
                 if(rule.on){
                     for(const t in rule.on){
@@ -66,7 +69,7 @@ export class Bist extends observeCssSelector(XtalStateWatch){
                         const _t = this;
                         target.addEventListener(t, e=>{
                             eR(e, _t);
-                        })
+                        });
                     }
                 }
             }
@@ -75,15 +78,16 @@ export class Bist extends observeCssSelector(XtalStateWatch){
     }
     merge(path: string, val: any, cmd:string){
         const h = this._window.history;
-        const state = h.state;
+        const state = h.state || {};
         const hist = Object.assign({}, state);
-        const mergeO = createNestedProp({}, path.split('.'), val, false);
-        mergeDeep(state, mergeO);
+        const newObj = {};
+        createNestedProp(newObj, path.split('.'), val, true);
+        mergeDeep(state, newObj);
         
         this.de('history',{
-            value: hist
+            value: state
         });
-        (<any>h)[cmd + 'State'](hist, '', this._url);
+        (<any>h)[cmd + 'State'](state, '', this._url);
     }
 
     pullFromPath(path: string, def: string){

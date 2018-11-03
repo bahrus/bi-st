@@ -30,20 +30,14 @@
         <p-d on="value-changed" to="{history:target.value}"></p-d>
         <xtal-state-update init rewrite level="global"></xtal-state-update>
 
-        
-
         <!-- ==========================  UI Input Fields ===================================-->
         <!-- Add a new key (or replace existing one) -->
         <input type="text" placeholder="key" data-st="draft.key">
-        <!-- Save key to history.draft.key -->
-        <!-- <p-d-x on="input" to="xtal-state-update{history.draft.key:target.value}" m="1" skip-init></p-d-x> -->
         <!-- Pass key to aggregator that creates key / value object -->
         <p-d on="input" to="aggregator-fn{key:target.value}" m="1"></p-d>
 
         <!-- Edit (JSON) value -->
-        <textarea placeholder="value (JSON optional)"></textarea>
-        <!-- Pass value to history.draft.value -->
-        <p-d-x on="input" to="xtal-state-update{history.draft.value:target.value}" m="1" skip-init></p-d-x>
+        <textarea placeholder="value (JSON optional)" data-st="draft.value"></textarea>
         <!-- Pass (JSON) value to key / value aggregator -->
         <p-d on="input" to="{val:target.value}"></p-d>
         <!-- ============================  End UI Input fields =============================== -->
@@ -79,7 +73,7 @@
             ({
                 '[data-st]': {
                     onPopState: (bist, el) => {
-                        el.value = bist.pullFromPath(el.dataset.st, 'Volt ikh mit dir gefloygn vu du vilst');
+                        el.value = bist.pullFromPath(el.dataset.st, el.value);
                     },
                     on: {
                         input: (event, bist ) => {

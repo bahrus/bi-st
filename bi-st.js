@@ -47,6 +47,9 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
                     this.addEventListener('history-changed', e => {
                         rule.onPopState(this, target);
                     });
+                    if (this._window.history.state !== null) {
+                        rule.onPopState(this, target);
+                    }
                 }
                 if (rule.on) {
                     for (const t in rule.on) {
@@ -62,14 +65,15 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
     }
     merge(path, val, cmd) {
         const h = this._window.history;
-        const state = h.state;
+        const state = h.state || {};
         const hist = Object.assign({}, state);
-        const mergeO = createNestedProp({}, path.split('.'), val, false);
-        mergeDeep(state, mergeO);
+        const newObj = {};
+        createNestedProp(newObj, path.split('.'), val, true);
+        mergeDeep(state, newObj);
         this.de('history', {
-            value: hist
+            value: state
         });
-        h[cmd + 'State'](hist, '', this._url);
+        h[cmd + 'State'](state, '', this._url);
     }
     pullFromPath(path, def) {
         let context = this._window.history.state;
