@@ -21,6 +21,7 @@ export class Bist extends observeCssSelector(XtalStateWatch){
     connectedCallback() {
         this.style.display = 'none';
         this.getElement('_script', t => t.querySelector('script')!);
+        super.connectedCallback();
     }
 
     getElement(fieldName: string, getter: (t: Bist) => HTMLElement){
@@ -89,10 +90,14 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         let context = this._window.history.state;
         if(context === null) return def;
         const pathTokens = path.split('.');
-        pathTokens.forEach(token => {
+        for(let i = 0, ii = pathTokens.length; i < ii; i++){
+            const token = pathTokens[i];
             context = context[token];
-            if(context === null || context === undefined) return def;
-        });
+            if(context === null || context === undefined){
+                return def;
+            } 
+        }
+        
         return context;        
     }
 

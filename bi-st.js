@@ -12,6 +12,7 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
     connectedCallback() {
         this.style.display = 'none';
         this.getElement('_script', t => t.querySelector('script'));
+        super.connectedCallback();
     }
     getElement(fieldName, getter) {
         this[fieldName] = getter(this);
@@ -75,11 +76,13 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
         if (context === null)
             return def;
         const pathTokens = path.split('.');
-        pathTokens.forEach(token => {
+        for (let i = 0, ii = pathTokens.length; i < ii; i++) {
+            const token = pathTokens[i];
             context = context[token];
-            if (context === null || context === undefined)
+            if (context === null || context === undefined) {
                 return def;
-        });
+            }
+        }
         return context;
     }
     get url() {
