@@ -67,8 +67,7 @@
         <!-- Update (merge) into global history.state object the new submitted object -->
         <xtal-state-update make level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"></xtal-state-update>
 
-        <!-- Send new history.state object to object persister -->
-        <!-- <p-d on="history-changed" to="{historyEvent:target}" skip-init></p-d> -->
+
         <bi-st level="global"><script nomodule>
             ({
                 '[data-st]': {
@@ -83,7 +82,9 @@
                 }
             })
         </script></bi-st>
-
+        <!-- Send new history.state object to object persister -->
+        <p-d on="history-changed" to="{historyEvent:target}" skip-init></p-d>
+        
         <!-- Persist history.state to remote store-->
         <purr-sist write></purr-sist>
 

@@ -76,6 +76,7 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         }
         
     }
+    value: any;
     merge(path: string, val: any, cmd:string){
         const h = this._window.history;
         const state = h.state || {};
@@ -83,7 +84,7 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         const newObj = {};
         createNestedProp(newObj, path.split('.'), val, true);
         mergeDeep(state, newObj);
-        
+        this.value = state;
         this.de('history',{
             value: state
         });
