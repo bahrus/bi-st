@@ -11,8 +11,8 @@
     "url": "git+https://github.com/bahrus/bi-st.git"
   },
   "dependencies": {
-    "xtal-latx": "0.0.56",
-    "xtal-state": "0.0.54"
+    "xtal-latx": "0.0.60",
+    "xtal-state": "0.0.55"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",

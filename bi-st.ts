@@ -1,15 +1,17 @@
-import {mergeDeep} from 'xtal-latx/mergeDeep.js'
+import {mergeDeep} from 'xtal-latx/mergeDeep.js';
+import {getWinCtx} from 'xtal-state/xtal-state-base.js';
 import {XtalStateWatch} from 'xtal-state/xtal-state-watch.js';
 import {define} from 'xtal-latx/define.js';
 import {observeCssSelector} from 'xtal-latx/observeCssSelector.js';
 import {createNestedProp} from 'xtal-latx/createNestedProp.js';
+import {UrlFormatter} from 'xtal-state/url-formatter.js';
 
 interface IRule{
     onPopState: (bist: Bist, el: HTMLElement) => void;
     on: {[key: string]: (e: Event, bist: Bist) => void};
 }
 
-export class Bist extends observeCssSelector(XtalStateWatch){
+export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
     static get is(){return 'bi-st';}
     constructor(){
         super();
@@ -21,6 +23,18 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         this.style.display = 'none';
         this.getElement('_script', t => t.querySelector('script')!);
         super.connectedCallback();
+        getWinCtx(this, this.level).then(win =>{
+            this.addEventListener('history-changed', this.histChgListener);
+            const w = (<any>win) as Window;
+            if((<any>win).history.state !== null){
+                this.sync(w)
+            }
+            
+        })
+
+    }
+    static get observedAttributes(){
+        return super.observedAttributes.concat(this.UFAttribs);
     }
 
     getElement(fieldName: string, getter: (t: Bist) => HTMLElement){
@@ -47,6 +61,15 @@ export class Bist extends observeCssSelector(XtalStateWatch){
                 this.regListener(target as HTMLElement);
             }, 0)
         }
+    }
+    histChgListener(e: Event){
+        this.sync(this._window);
+    }
+    sync(win: Window){
+        this.value = win.history.state;
+        this.de('sync-history',{
+            value: this.value
+        }, true);
     }
     regListener(target: HTMLElement){
         //TODO:  optimize
@@ -84,10 +107,11 @@ export class Bist extends observeCssSelector(XtalStateWatch){
         createNestedProp(newObj, path.split('.'), val, true);
         mergeDeep(state, newObj);
         this.value = state;
-        this.de('history',{
+        this.de('sync-history',{
             value: state
-        });
-        (<any>h)[cmd + 'State'](state, '', this._url);
+        }, true);
+        const url = this.adjustUrl(this._url);
+        (<any>h)[cmd + 'State'](state, '', url);
     }
 
     pullFromPath(path: string, def: string){

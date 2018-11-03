@@ -1,9 +1,11 @@
 import { mergeDeep } from 'xtal-latx/mergeDeep.js';
+import { getWinCtx } from 'xtal-state/xtal-state-base.js';
 import { XtalStateWatch } from 'xtal-state/xtal-state-watch.js';
 import { define } from 'xtal-latx/define.js';
 import { observeCssSelector } from 'xtal-latx/observeCssSelector.js';
 import { createNestedProp } from 'xtal-latx/createNestedProp.js';
-export class Bist extends observeCssSelector(XtalStateWatch) {
+import { UrlFormatter } from 'xtal-state/url-formatter.js';
+export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     static get is() { return 'bi-st'; }
     constructor() {
         super();
@@ -13,6 +15,16 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
         this.style.display = 'none';
         this.getElement('_script', t => t.querySelector('script'));
         super.connectedCallback();
+        getWinCtx(this, this.level).then(win => {
+            this.addEventListener('history-changed', this.histChgListener);
+            const w = win;
+            if (win.history.state !== null) {
+                this.sync(w);
+            }
+        });
+    }
+    static get observedAttributes() {
+        return super.observedAttributes.concat(this.UFAttribs);
     }
     getElement(fieldName, getter) {
         this[fieldName] = getter(this);
@@ -37,6 +49,15 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
                 this.regListener(target);
             }, 0);
         }
+    }
+    histChgListener(e) {
+        this.sync(this._window);
+    }
+    sync(win) {
+        this.value = win.history.state;
+        this.de('sync-history', {
+            value: this.value
+        }, true);
     }
     regListener(target) {
         //TODO:  optimize
@@ -71,10 +92,11 @@ export class Bist extends observeCssSelector(XtalStateWatch) {
         createNestedProp(newObj, path.split('.'), val, true);
         mergeDeep(state, newObj);
         this.value = state;
-        this.de('history', {
+        this.de('sync-history', {
             value: state
-        });
-        h[cmd + 'State'](state, '', this._url);
+        }, true);
+        const url = this.adjustUrl(this._url);
+        h[cmd + 'State'](state, '', url);
     }
     pullFromPath(path, def) {
         let context = this._window.history.state;

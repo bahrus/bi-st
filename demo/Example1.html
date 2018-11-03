@@ -67,7 +67,7 @@
         <xtal-state-update make level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"></xtal-state-update>
 
         <!-- Manage binding between global history.state and UI elements -->
-        <bi-st level="global"><script nomodule url-search="(?<store>(.*?))" replace-url-value="?id=$<store>">({
+        <bi-st level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
             '[data-st]': {
                 onPopState: (bist, el) => {
                     el.value = bist.pullFromPath(el.dataset.st, el.value);
@@ -87,7 +87,7 @@
             }
         })</script></bi-st>
         <!-- Send new history.state object to object persister -->
-        <p-d on="history-changed" to="{historyEvent:target}" skip-init></p-d>
+        <p-d on="sync-history" to="{historyEvent:target}" skip-init></p-d>
 
         <!-- Persist history.state to remote store-->
         <purr-sist write></purr-sist>
@@ -104,7 +104,7 @@
         <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.74/p-d.p-d-x.p-u.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.11/aggregator-fn.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.54/xtal-state.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.55/xtal-state.js"></script>
         <script type="module" src="../bi-st.js"></script>
     </div>
 </body>
