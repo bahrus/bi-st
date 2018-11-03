@@ -2,7 +2,7 @@
 
 bi-st **bi**nds elements to the history.**st**ate object.  Its purpose is take the long, drawn-out unambiguously unidirectional markup [seen here](https://github.com/bahrus/purr-sist#example-3----time-travel-support-aka-back-button), and roll it up into a nice compact sushi roll.  To help visualize this analogy, see Figure 1 below.  
 
-![](https://media.giphy.com/media/RO023EYTyk5yg/giphy.gif "Figure 1")
+![test](https://media.giphy.com/media/RO023EYTyk5yg/giphy.gif "Figure 1")
 
 
 Syntax:
