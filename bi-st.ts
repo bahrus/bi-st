@@ -21,6 +21,7 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
 
     connectedCallback() {
         this.style.display = 'none';
+        if(this._disabled) return;
         this.getElement('_script', t => t.querySelector('script')!);
         super.connectedCallback();
         getWinCtx(this, this.level).then(win =>{

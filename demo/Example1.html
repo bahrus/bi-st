@@ -19,28 +19,28 @@
         <!-- If no id found in address bar, "pass-down (p-d)" message to purr-sist writer 
             and xtal-state-update history initializer  to  create a new record ("session") 
             in both history and remote store -->
-        <p-d on="no-match-found" to="purr-sist[write],xtal-state-update[init]{new:target.noMatch}" m="2" skip-init></p-d>
+        <p-d on="no-match-found" to="purr-sist[write],xtal-state-update[init]" prop="new" val="target.noMatch" m="2" skip-init></p-d>
 
         <!-- If id found in address bar, pass it to the persistence reader and writer -->
-        <p-d on="match-found" to="purr-sist{storeId:target.value.storeId}" m="2" skip-init></p-d>
+        <p-d on="match-found" to="purr-sist" prop="storeId" val="target.value.storeId" m="2" skip-init></p-d>
 
         <!-- Read stored history.state from remote database if id found in address bar -->
-        <purr-sist read></purr-sist>
+        <purr-sist read disabled></purr-sist>
 
         <!-- If persisted history.state found, repopulate history.state-->
-        <p-d on="value-changed" to="{history:target.value}"></p-d>
+        <p-d on="value-changed" to="history" prop="target.value"></p-d>
         <xtal-state-update init rewrite level="global"></xtal-state-update>
 
         <!-- ==========================  UI Input Fields ===================================-->
         <!-- Add a new key (or replace existing one) -->
-        <input type="text" placeholder="key" data-st="draft.key">
+        <input type="text" disabled placeholder="key" data-st="draft.key">
         <!-- Pass key to aggregator that creates key / value object -->
-        <p-d on="input" to="aggregator-fn{key:target.value}" m="1"></p-d>
+        <p-d on="input" to="aggregator-fn" prop="key" val="target.value" m="1"></p-d>
 
         <!-- Edit (JSON) value -->
-        <textarea placeholder="value (JSON optional)" data-st="draft.value"></textarea>
+        <textarea disabled placeholder="value (JSON optional)" data-st="draft.value"></textarea>
         <!-- Pass (JSON) value to key / value aggregator -->
-        <p-d on="input" to="{val:target.value}"></p-d>
+        <p-d on="input" prop="val" val="target.value"></p-d>
         <!-- ============================  End UI Input fields =============================== -->
 
         <!-- Combine key / value fields into one object -->
@@ -57,12 +57,12 @@
             </script>
         </aggregator-fn>
         <!-- Pass Aggregated Object to button's "obj" property -->
-        <p-d on="value-changed" to="button{obj:target.value}" m="1"></p-d>
+        <p-d on="value-changed" to="button" prop="obj" val="target.value" m="1"></p-d>
 
         <button insert>Insert Key/Value pair</button>
 
         <!-- Manage binding between global history.state and UI elements -->
-        <bi-st level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
+        <bi-st disabled level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
             '[data-st]': {
                 onPopState: (bist, el) => {
                     el.value = bist.pullFromPath(el.dataset.st, el.value);
@@ -78,13 +78,13 @@
             }
         })</script></bi-st>
         <!-- Send new history.state object to object persister -->
-        <p-d on="sync-history" to="{historyEvent:target}" skip-init></p-d>
+        <p-d on="sync-history" prop="historyEvent" val="target" skip-init></p-d>
 
         <!-- Persist history.state to remote store-->
         <purr-sist write></purr-sist>
 
         <!-- Pass persisted object to JSON viewer -->
-        <p-d on="value-changed" to="{input}"></p-d>
+        <p-d on="value-changed" prop="input"></p-d>
         <xtal-json-editor options="{}" height="300px"></xtal-json-editor>
 
         <!-- Reload window to see if changes persist -->
@@ -92,7 +92,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.20/purr-sist.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.74/p-d.p-d-x.p-u.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.91/dist/p-all.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.11/aggregator-fn.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.55/xtal-state.js"></script>
