@@ -40,7 +40,7 @@
 
         <!-- ==========================  UI Input Fields ===================================-->
         <!-- Manage binding between global history.state and UI elements -->
-        <bi-st id="bist" level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
+        <bi-st disabled id="bist" level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
             '[data-st]': {
                 onPopState: (bist, el) => {
                     el.value = bist.pullFromPath(el.dataset.st, el.value);
@@ -55,7 +55,7 @@
                 }
             }
         })</script></bi-st>
-        <p-d on="sync-history" to="purr-sist-myjson" prop="newVal" val="target.value"></p-d>
+        <p-d on="history-changed" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
 
         <!-- Add a new key (or replace existing one) -->
         <input type="text" disabled placeholder="key" data-st="draft.key">
@@ -107,12 +107,13 @@
         <button onclick="window.location.reload()">Reload Window</button>
 
         <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.35/dist/purr-sist-myjson.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.36/dist/purr-sist-myjson.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.100/dist/p-all.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.15/dist/aggregator-fn.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state.iife.js"></script>
-        <script type="module" src="../bi-st.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-update.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-parse.iife.js"></script>
+        <script type="module" src="../dist/bi-st.iife.js"></script>
     </div>
 </body>
 </html>
