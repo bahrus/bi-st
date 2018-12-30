@@ -38,7 +38,10 @@ The demo shown here [link forthcoming] does the following:
 2.  The data the user enters is put into history.state.
 3.  History.state is persisted to a remote datastore.
 
-The total number of lines of markup is only slightly fewer than the example shown [here (view source)](https://bahrus.github.io/purr-sist-demos/Example3.html), that does the same thing without the benefit of this component.  However, as a page increases in complexity, with large numbers of UI elements, this component should help significantly reduce the amount of boilerplate.
+The total number of lines of markup is [only slightly fewer](https://bahrus.github.io/bi-st-demos/index.htm) than the example shown [here (view source)](https://bahrus.github.io/purr-sist-demos/Example3.html), that does the same thing without the benefit of this component.  In particular, the number of lines droped from 129 lines to 119 lines.  
+
+
+However, as a page increases in complexity, with large numbers of UI elements, this component should help significantly reduce the amount of boilerplate.  Markup shown below.
 
 ##  What's so great about history.state?
 
@@ -47,3 +50,124 @@ One of the trappings of a component library, like Vueactulitymber, is that each 
 Why not use the platform, and utilize something that will forevermore (?) ship with every browser?  That supports time travel, and routing?
 
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example 1</title>
+</head>
+
+<body>
+    <div style="display:flex;flex-direction: column">
+
+        <!-- Parse the address bar -->
+        <xtal-state-parse disabled="3" parse="location.href" level="global" 
+            with-url-pattern="id=(?<storeId>[a-z0-9-]*)">
+        </xtal-state-parse>
+
+        <!-- If no id found in address bar, "pass-down (p-d)" message to purr-sist-myjson writer 
+            and xtal-state-update history initializer  to  create a new record ("session") 
+            in both history and remote store -->
+        <p-d on="no-match-found" to="purr-sist-myjson[write],xtal-state-update[init]" prop="new" val="target.noMatch" m="2" skip-init></p-d>
+
+        <!-- If id found in address bar, pass it to 
+            the persistence reader if history is null -->
+        <p-d on="match-found" if="[data-history-was-null]" to="purr-sist-myjson[read]" prop="storeId" val="target.value.storeId" m="1" skip-init></p-d>
+
+        <!-- If id found in address bar, pass it to the 
+            persistence writer whether or not history is null -->
+        <p-d on="match-found" to="purr-sist-myjson[write]" prop="storeId" 
+            val="target.value.storeId" m="1" skip-init></p-d>
+
+       <!-- Read stored history.state from remote database if 
+            id found in address bar and history starts out null -->
+        <purr-sist-myjson read disabled></purr-sist-myjson>
+
+        <!-- If persisted history.state found, repopulate history.state-->
+        <p-d on="value-changed" to="history" prop="target.value"></p-d>
+        <xtal-state-update init rewrite level="global"></xtal-state-update>
+
+        <!-- ==========================  UI Input Fields ===================================-->
+        <!-- Manage binding between global history.state and UI elements -->
+        <bi-st disabled id="bist" level="global" url-search="(?<store>(.*?))" replace-url-value="?id=$<store>"><script nomodule >({
+            '[data-st]': {
+                onPopState: (bist, el) => {
+                    el.value = bist.pullFromPath(el.dataset.st, el.value);
+                },
+                on: {
+                    input: (event, bist ) => bist.merge(event.target.dataset.st, event.target.value, 'push'),
+                }
+            },
+            '[insert]':{
+                on:{
+                    click: (event, bist) => bist.merge('submitted', event.target.obj, 'push'),
+                }
+            }
+        })</script></bi-st>
+        <p-d on="history-changed" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
+
+        <!-- Add a new key (or replace existing one) -->
+        <input type="text" disabled placeholder="key" data-st="draft.key">
+        <!-- Pass key to aggregator that creates key / value object -->
+        <p-d on="input" to="aggregator-fn" prop="key" val="target.value" m="1"></p-d>
+
+        <!-- Edit (JSON) value -->
+        <textarea disabled placeholder="value (JSON optional)" data-st="draft.value"></textarea>
+        <!-- Pass (JSON) value to key / value aggregator -->
+        <p-d on="input" prop="val" val="target.value"></p-d>
+        <!-- ============================  End UI Input fields =============================== -->
+
+        <!-- Combine key / value fields into one object -->
+        <aggregator-fn><script nomodule>
+            fn = ({ key, val }) => {
+                if (key === undefined || val === undefined) return null;
+                try {
+                    return { [key]: JSON.parse(val) };
+                } catch (e) {
+                    return { [key]: val };
+                }
+            }
+        </script></aggregator-fn>
+        <!-- Pass Aggregated Object to button's "obj" property -->
+        <p-d on="value-changed" to="button" prop="obj" val="target.value" m="1"></p-d>
+
+        <button insert>Insert Key/Value pair</button>
+        <!-- Pass button's "obj" property to history via 
+            history-state-update
+        -->
+        <p-d-x on="click" to="xtal-state-update" prop="history.submitted" val="target.__obj" skip-init m="1"></p-d-x>
+
+
+        
+        <!-- Send new history.state object to object persister -->
+        <p-d on="history-changed" prop="newVal"  skip-init></p-d>
+
+        <!-- Persist history.state to remote store-->
+        <purr-sist-myjson write></purr-sist-myjson>
+
+        <!-- Pass store ID up one element so xtal-state-update knows how to update the address bar -->
+        <p-u on="new-store-id" to="bist" prop="url"></p-u>
+
+        <!-- Pass persisted object to JSON viewer -->
+        <p-d on="value-changed" prop="input"></p-d>
+        <xtal-json-editor options="{}" height="300px"></xtal-json-editor>
+
+        <!-- Reload window to see if changes persist -->
+        <button onclick="window.location.reload()">Reload Window</button>
+
+        <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.36/dist/purr-sist-myjson.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.100/dist/p-all.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.15/dist/aggregator-fn.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-update.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-parse.iife.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/bi-st@0.0.2/dist/bi-st.iife.js"></script>
+    </div>
+</body>
+</html>
+```
