@@ -1,5 +1,5 @@
 import { mergeDeep } from 'xtal-latx/mergeDeep.js';
-import { getWinCtx } from 'xtal-state/xtal-state-base.js';
+import { getWinCtx } from 'xtal-state/xtal-state-api.js';
 import { XtalStateWatch } from 'xtal-state/xtal-state-watch.js';
 import { define } from 'xtal-latx/define.js';
 import { observeCssSelector } from 'xtal-latx/observeCssSelector.js';
