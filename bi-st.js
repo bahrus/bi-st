@@ -9,10 +9,10 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     static get is() { return 'bi-st'; }
     constructor() {
         super();
-        this.watch = 'popstate';
     }
     connectedCallback() {
         this.style.display = 'none';
+        this.watch = 'popstate';
         if (this._disabled)
             return;
         this.getElement('_script', t => t.querySelector('script'));
@@ -26,7 +26,7 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
         });
     }
     static get observedAttributes() {
-        return super.observedAttributes.concat(this.UFAttribs);
+        return super.observedAttributes.concat(super.UFAttribs);
     }
     getElement(fieldName, getter) {
         this[fieldName] = getter(this);

@@ -15,12 +15,13 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
     static get is(){return 'bi-st';}
     constructor(){
         super();
-        this.watch = 'popstate';
+        
     }
     _script!: HTMLScriptElement;
 
     connectedCallback() {
         this.style.display = 'none';
+        this.watch = 'popstate';
         if(this._disabled) return;
         this.getElement('_script', t => t.querySelector('script')!);
         super.connectedCallback();
@@ -35,7 +36,7 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
 
     }
     static get observedAttributes(){
-        return super.observedAttributes.concat(this.UFAttribs);
+        return super.observedAttributes.concat(super.UFAttribs);
     }
 
     getElement(fieldName: string, getter: (t: Bist) => HTMLElement){
