@@ -38,7 +38,7 @@ The demo shown here [link forthcoming] does the following:
 2.  The data the user enters is put into history.state.
 3.  History.state is persisted to a remote datastore.
 
-The total number of lines of markup is [only slightly fewer](https://bahrus.github.io/bi-st-demos/index.htm) than the example shown [here (view source)](https://bahrus.github.io/purr-sist-demos/Example3.html), that does the same thing without the benefit of this component.  In particular, the number of lines droped from 129 lines to 119 lines.  
+The total number of lines of markup is [only slightly fewer](https://bahrus.github.io/bi-st-demos/index.htm) than the example shown [here (view source)](https://bahrus.github.io/purr-sist-demos/Example3.html), that does the same thing without the benefit of this component.  In particular, the number of lines drops from 129 lines to 110 lines.  
 
 
 However, as a page increases in complexity, with large numbers of UI elements, this component should help significantly reduce the amount of boilerplate.  Markup shown below.
@@ -135,16 +135,7 @@ Why not use the platform, and utilize something that will forevermore (?) ship w
         <!-- Pass Aggregated Object to button's "obj" property -->
         <p-d on="value-changed" to="button" prop="obj" val="target.value" m="1"></p-d>
 
-        <button insert>Insert Key/Value pair</button>
-        <!-- Pass button's "obj" property to history via 
-            history-state-update
-        -->
-        <p-d-x on="click" to="xtal-state-update" prop="history.submitted" val="target.__obj" skip-init m="1"></p-d-x>
-
-
-        
-        <!-- Send new history.state object to object persister -->
-        <p-d on="history-changed" prop="newVal"  skip-init></p-d>
+        <button insert>Insert Key/Value pair</button>        
 
         <!-- Persist history.state to remote store-->
         <purr-sist-myjson write></purr-sist-myjson>

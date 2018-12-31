@@ -82,16 +82,7 @@
         <!-- Pass Aggregated Object to button's "obj" property -->
         <p-d on="value-changed" to="button" prop="obj" val="target.value" m="1"></p-d>
 
-        <button insert>Insert Key/Value pair</button>
-        <!-- Pass button's "obj" property to history via 
-            history-state-update
-        -->
-        <p-d-x on="click" to="xtal-state-update" prop="history.submitted" val="target.__obj" skip-init m="1"></p-d-x>
-
-
-        
-        <!-- Send new history.state object to object persister -->
-        <p-d on="history-changed" prop="newVal"  skip-init></p-d>
+        <button insert>Insert Key/Value pair</button>        
 
         <!-- Persist history.state to remote store-->
         <purr-sist-myjson write></purr-sist-myjson>
