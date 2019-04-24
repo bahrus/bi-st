@@ -12,15 +12,16 @@
     "url": "git+https://github.com/bahrus/bi-st.git"
   },
   "dependencies": {
-    "xtal-latx": "0.0.88",
-    "xtal-state": "0.0.67"
+    "xtal-state": "0.0.77",
+    "xtal-element": "0.0.58",
+    "trans-render": "0.0.110"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "2.2.1",
-    "jiife": "0.0.11",
-    "tape": "4.9.2",
+    "@webcomponents/webcomponentsjs": "2.2.10",
+    "jiife": "0.0.12",
+    "tape": "4.10.1",
     "@types/tape": "4.2.33",
-    "xtal-test": "0.0.10"
+    "xtal-test": "0.0.13"
   },
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",

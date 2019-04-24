@@ -1,9 +1,9 @@
-import {mergeDeep} from 'xtal-latx/mergeDeep.js';
+import {mergeDeep} from 'trans-render/mergeDeep.js';
 import {getWinCtx} from 'xtal-state/xtal-state-api.js';
 import {XtalStateWatch} from 'xtal-state/xtal-state-watch.js';
-import {define} from 'xtal-latx/define.js';
-import {observeCssSelector} from 'xtal-latx/observeCssSelector.js';
-import {createNestedProp} from 'xtal-latx/createNestedProp.js';
+import {define} from 'trans-render/define.js';
+import {observeCssSelector} from 'xtal-element/observeCssSelector.js';
+import {createNestedProp} from 'xtal-element/createNestedProp.js';
 import {UrlFormatter} from 'xtal-state/url-formatter.js';
 
 interface IRule{
