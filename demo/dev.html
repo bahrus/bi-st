@@ -35,7 +35,7 @@
         <purr-sist-myjson read disabled></purr-sist-myjson>
 
         <!-- If persisted history.state found, repopulate history.state-->
-        <p-d on="value-changed" to="history" prop="target.value"></p-d>
+        <p-d on="value-changed" prop="history" skip-init></p-d>
         <xtal-state-update init rewrite level="global"></xtal-state-update>
 
         <!-- ==========================  UI Input Fields ===================================-->
