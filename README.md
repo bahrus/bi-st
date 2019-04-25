@@ -1,3 +1,9 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/bi-st)
+
+<a href="https://nodei.co/npm/bi-st/"><img src="https://nodei.co/npm/bi-st.png"></a>
+
+<img src="https://badgen.net/bundlephobia/minzip/bi-st">
+
 # bi-st
 
 bi-st **bi**nds elements to the window.history.**st**ate object.  Its purpose is to take the long, drawn-out 99% unambiguously unidirectional markup [seen here](https://github.com/bahrus/purr-sist#example-a1----time-travel-support-aka-back-button), and roll it up into a nice compact sushi roll.  To help visualize this analogy, see Figure 1 below.  
