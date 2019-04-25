@@ -35,7 +35,7 @@
         <purr-sist-myjson read disabled></purr-sist-myjson>
 
         <!-- If persisted history.state found, repopulate history.state-->
-        <p-d on="value-changed" to="history" prop="target.value"></p-d>
+        <p-d on="value-changed" prop="history" skip-init></p-d>
         <xtal-state-update init rewrite level="global"></xtal-state-update>
 
         <!-- ==========================  UI Input Fields ===================================-->
@@ -55,7 +55,7 @@
                 }
             }
         })</script></bi-st>
-        <p-d on="history-changed" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
+        <p-d on="sync-history" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
 
         <!-- Add a new key (or replace existing one) -->
         <input type="text" disabled placeholder="key" data-st="draft.key">
@@ -82,7 +82,7 @@
         <!-- Pass Aggregated Object to button's "obj" property -->
         <p-d on="value-changed" to="button" prop="obj" val="target.value" m="1"></p-d>
 
-        <button insert>Insert Key/Value pair</button>        
+        <button insert>Insert Key/Value pair</button>
 
         <!-- Persist history.state to remote store-->
         <purr-sist-myjson write></purr-sist-myjson>
@@ -98,13 +98,14 @@
         <button onclick="window.location.reload()">Reload Window</button>
 
         <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.36/dist/purr-sist-myjson.iife.js"></script>
+        <script type="module" src="https://unpkg.com/purr-sist@0.0.57/purr-sist-myjson.js?module"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.100/dist/p-all.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.15/dist/aggregator-fn.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-update.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-parse.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/bi-st@0.0.2/dist/bi-st.iife.js"></script>
+        <script type="module" src="https://unpkg.com/xtal-state@0.0.84/xtal-state-update.js?module"></script>
+        <script type="module" src="https://unpkg.com/xtal-state@0.0.84/xtal-state-parse.js?module"></script>
+        <script type="module" src="https://unpkg.com/bi-st@0.0.5/bi-st.js?module"></script>
+
     </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ bi-st **bi**nds elements to the window.history.**st**ate object.  Its purpose is
 
 **Figure 1**
 
+
 What we get is more compact and more flexible, which is good, but less clearly unidirectional, and a little less declarative, which, in my book, is not so good.  
 
 ## Syntax:
@@ -32,7 +33,7 @@ The syntax for binding a UI element is shown below.
 <purr-sist write></purr-sist>
 ```
 
-The demo shown here [link forthcoming] does the following:
+The demo shown [here](https://bahrus.github.io/bi-st-demos/index.html) does the following:
 
 1.  Allows the user to enter arbitary key value pairs into an object.
 2.  The data the user enters is put into history.state.
@@ -48,6 +49,8 @@ However, as a page increases in complexity, with large numbers of UI elements, t
 One of the trappings of a component library, like Vueactulitymber, is that each such library ships with a state manager / render binding.  But what if you want to combine components together using different libraries?  A tempting choice is to say "use Redux, or MobX, or RxJs, or CycleJS" to unify the state management.  But this tends to enforce a "library / framework" choice of its own.  For small applications / teams this may be fine, but what if you are working with a large application, that spans multiple generations of component libraries, involving loosely coupled teams?
 
 Why not use the platform, and utilize something that will forevermore (?) ship with every browser?  That supports time travel, and routing?
+
+It should be noted that AMP components (like amp-bind) seem to ba based on the same principle.
 
 
 ```html
