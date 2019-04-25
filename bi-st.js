@@ -1,9 +1,9 @@
-import { mergeDeep } from 'xtal-latx/mergeDeep.js';
+import { mergeDeep } from 'trans-render/mergeDeep.js';
 import { getWinCtx } from 'xtal-state/xtal-state-api.js';
 import { XtalStateWatch } from 'xtal-state/xtal-state-watch.js';
-import { define } from 'xtal-latx/define.js';
-import { observeCssSelector } from 'xtal-latx/observeCssSelector.js';
-import { createNestedProp } from 'xtal-latx/createNestedProp.js';
+import { define } from 'trans-render/define.js';
+import { observeCssSelector } from 'xtal-element/observeCssSelector.js';
+import { createNestedProp } from 'xtal-element/createNestedProp.js';
 import { UrlFormatter } from 'xtal-state/url-formatter.js';
 export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     static get is() { return 'bi-st'; }
@@ -13,8 +13,7 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     connectedCallback() {
         this.style.display = 'none';
         this.watch = 'popstate';
-        if (this._disabled)
-            return;
+        //if(this._disabled) return;
         this.getElement('_script', t => t.querySelector('script'));
         super.connectedCallback();
         getWinCtx(this, this.level).then(win => {
@@ -24,6 +23,9 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
                 this.sync(w);
             }
         });
+    }
+    onPropsChange() {
+        return true;
     }
     static get observedAttributes() {
         return super.observedAttributes.concat(super.UFAttribs);
@@ -63,6 +65,10 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     }
     regListener(target) {
         //TODO:  optimize
+        // if(!this._window){
+        //     setTimeout(() => this.regListener(target), 50);
+        //     return;
+        // }
         for (const sel in this._rules) {
             if (target.matches(sel)) {
                 const rule = this._rules[sel];
@@ -122,4 +128,3 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)) {
     }
 }
 define(Bist);
-//# sourceMappingURL=bi-st.js.map

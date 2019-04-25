@@ -12,7 +12,7 @@
     "url": "git+https://github.com/bahrus/bi-st.git"
   },
   "dependencies": {
-    "xtal-state": "0.0.77",
+    "xtal-state": "0.0.83",
     "xtal-element": "0.0.58",
     "trans-render": "0.0.110"
   },

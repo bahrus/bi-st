@@ -55,7 +55,7 @@
                 }
             }
         })</script></bi-st>
-        <p-d on="history-changed" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
+        <p-d on="sync-history" to="purr-sist-myjson" prop="newVal" val="target.value" m="1"></p-d>
 
         <!-- Add a new key (or replace existing one) -->
         <input type="text" disabled placeholder="key" data-st="draft.key">
@@ -98,13 +98,19 @@
         <button onclick="window.location.reload()">Reload Window</button>
 
         <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.36/dist/purr-sist-myjson.iife.js"></script>
+        <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/purr-sist@0.0.36/dist/purr-sist-myjson.iife.js"></script> -->
+        <script type="module" src="https://unpkg.com/purr-sist@0.0.55/purr-sist-myjson.js?module"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.100/dist/p-all.iife.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-json-editor@0.0.29/xtal-json-editor.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.15/dist/aggregator-fn.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-update.iife.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-state@0.0.67/dist/xtal-state-parse.iife.js"></script>
-        <script type="module" src="../bi-st.js"></script>
+        <script type="module">
+            import 'xtal-state/xtal-state-update.js';
+            import 'xtal-state/xtal-state-parse.js';
+            import '../bi-st.js';
+        </script>
+        <!-- <script type="module" src="../node_modules/xtal-state/xtal-state-update.js"></script>
+        <script type="module" src="../node_modules/xtal-state/xtal-state-parse.js"></script>
+        <script type="module" src="../bi-st.js"></script> -->
     </div>
 </body>
 </html>

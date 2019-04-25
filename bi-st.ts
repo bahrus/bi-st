@@ -22,7 +22,7 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
     connectedCallback() {
         this.style.display = 'none';
         this.watch = 'popstate';
-        if(this._disabled) return;
+        //if(this._disabled) return;
         this.getElement('_script', t => t.querySelector('script')!);
         super.connectedCallback();
         getWinCtx(this, this.level).then(win =>{
@@ -35,6 +35,12 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
         })
 
     }
+
+
+    onPropsChange(){
+        return true;
+    }
+
     static get observedAttributes(){
         return super.observedAttributes.concat(super.UFAttribs);
     }
@@ -75,6 +81,10 @@ export class Bist extends UrlFormatter(observeCssSelector(XtalStateWatch)){
     }
     regListener(target: HTMLElement){
         //TODO:  optimize
+        // if(!this._window){
+        //     setTimeout(() => this.regListener(target), 50);
+        //     return;
+        // }
         for(const sel in this._rules){
             if(target.matches(sel)){
                 const rule = this._rules[sel];
