@@ -1,6 +1,6 @@
 {
   "name": "bi-st",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Provide declarative binding of DOM/Custom Elements to history.state",
   "main": "bi-st.js",
   "module": "bi-st.js",
