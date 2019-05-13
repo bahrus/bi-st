@@ -5,23 +5,24 @@
   "main": "bi-st.js",
   "module": "bi-st.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node node_modules/xtal-test/serve.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bahrus/bi-st.git"
   },
   "dependencies": {
-    "xtal-state": "0.0.84",
-    "xtal-element": "0.0.58",
-    "trans-render": "0.0.110"
+    "xtal-state": "0.0.85",
+    "xtal-element": "0.0.59",
+    "trans-render": "0.0.111"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
     "jiife": "0.0.12",
     "tape": "4.10.1",
     "@types/tape": "4.2.33",
-    "xtal-test": "0.0.13"
+    "xtal-test": "0.0.18"
   },
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
