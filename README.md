@@ -1,5 +1,64 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/bi-st)
 
+
+Take 2:
+
+```html
+<html>
+    <head>
+        <iframe sandbox="..." id=Walmart src=blank.html></iframe>
+        <iframe sandbox="..." id=Target src=blank.html></iframe>
+    </head>
+    <body>
+        <input data-st=draft.key>
+        <bi-st history-keeper=Walmart debug><script nomodule> 
+        ({
+            '[data-st]':{
+                onPopState: ({bist, el}) =>{
+                    el.value = bist.pullFromPath(el.dataset.st, 'Volt ikh mit dir gefloygn vu du vilst');
+                },
+                on:{
+                    input: ({event, bist}) => bist.merge(event.target.dataset.st, event.target.value, 'push');
+                }
+            }
+        })
+        </script></bi-st>
+        <my-custom-element>
+            #ShadowDOM
+                <input data-st-1=draft.val data-st-2=draft.key>
+                <bi-st history-keeper=Target><script nomodule>
+                '[data-st-1]':{
+                    onPopState: ({bist, el}) =>{
+                        el.value = bist.pullFromPath(el.dataset.st1, 'Volt ikh mit dir gefloygn vu du vilst', ['input']); //fires event input after populating from history
+                    },
+                    on:{
+                        input: ({event, bist}) => bist.merge(event.target.dataset.st, event.target.value, 'push');
+                    }
+                }
+                </script></bi-st>
+                <bi-st history-keeper=Wegmans>
+                    <template>
+                        <!-- Gets added to head, left there -- not in RAM so who cares? -->
+                        <iframe sandbox="..." id=Wegmans src=blank.html></iframe>
+                    </template>
+                    <script nomodule>
+                    '[data-st-2]':{
+                        onPopState: ({bist, el}) =>{
+                            el.title = bist.pullFromPath(el.dataset.st2, 'Volt ikh mit dir gefloygn vu du vilst', ['input']); //fires event input after populating from history
+                        },
+                        on:{
+                            input: ({event, bist}) => bist.merge(event.target.dataset.st, event.target.value, 'push');
+                        }
+                    }
+                    </script>
+                </bi-st>
+        </my-custom-element>
+    </body>
+</html>
+```
+
+
+
 <a href="https://nodei.co/npm/bi-st/"><img src="https://nodei.co/npm/bi-st.png"></a>
 
 <img src="https://badgen.net/bundlephobia/minzip/bi-st">

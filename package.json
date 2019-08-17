@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "xtal-state": "0.0.85",
-    "xtal-element": "0.0.59",
-    "trans-render": "0.0.111"
+    "xtal-element": "0.0.80",
+    "trans-render": "0.0.131"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
