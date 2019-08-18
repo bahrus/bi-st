@@ -15,7 +15,7 @@ Take 2:
         ({
             '[data-st]':{
                 onPopState: ({bist, el}) =>{
-                    el.value = bist.pullFromPath(el.dataset.st, 'Volt ikh mit dir gefloygn vu du vilst');
+                    el.value = bist.pullFromPath(el.dataset.st, 'Volt ikh mit dir gefloygn vu du vilst', ['input']);
                 },
                 on:{
                     input: ({event, bist}) => bist.merge(event.target.dataset.st, event.target.value, 'push');
@@ -29,7 +29,7 @@ Take 2:
                 <bi-st history-keeper=Target><script nomodule>
                 '[data-st-1]':{
                     onPopState: ({bist, el}) =>{
-                        el.value = bist.pullFromPath(el.dataset.st1, 'Volt ikh mit dir gefloygn vu du vilst', ['input']); //fires event input after populating from history
+                        el.value = bist.pullFromPath(el.dataset.st1, 'Volt ikh mit dir gefloygn vu du vilst', ['input']); //fires event 'input' after populating from history and disabled removed?
                     },
                     on:{
                         input: ({event, bist}) => bist.merge(event.target.dataset.st, event.target.value, 'push');
