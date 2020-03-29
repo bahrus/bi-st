@@ -13,16 +13,13 @@
     "url": "git+https://github.com/bahrus/bi-st.git"
   },
   "dependencies": {
-    "xtal-state": "0.0.85",
-    "xtal-element": "0.0.80",
-    "trans-render": "0.0.131"
+    "xtal-state": "0.0.100",
+    "xtal-element": "0.0.101",
+    "trans-render": "0.0.143"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "2.2.10",
-    "jiife": "0.0.12",
-    "tape": "4.10.1",
-    "@types/tape": "4.2.33",
-    "xtal-test": "0.0.18"
+    "@webcomponents/webcomponentsjs": "2.4.3",
+    "xtal-test": "0.0.44"
   },
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
